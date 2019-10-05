@@ -4,15 +4,17 @@ import project.domain.sweet.choice.Fruit;
 
 import java.util.Objects;
 
+
 public class CaramelFruit extends Caramel {
     private static final String NAME = "Caramel fruit";
+    private static final Long PRICE = 5L;
     private static final Integer WEIGHT = 80;
     private static final Byte SUGAR_CONTENT = 30;
 
     private final Fruit fruit;
 
     public CaramelFruit(Fruit fruit) {
-        super(NAME, WEIGHT, SUGAR_CONTENT);
+        super(NAME, PRICE, WEIGHT, SUGAR_CONTENT);
         this.fruit = fruit;
     }
 
@@ -42,5 +44,10 @@ public class CaramelFruit extends Caramel {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), fruit);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", fruit: " + fruit.getDescription();
     }
 }

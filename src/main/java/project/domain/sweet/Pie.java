@@ -6,13 +6,14 @@ import java.util.Objects;
 
 public class Pie extends Bakery {
     private static final String NAME = "Pie";
+    private static final Long PRICE = 30L;
     private static final Integer WEIGHT = 800;
     private static final Byte SUGAR_CONTENT = 30;
 
     private final PieTaste taste;
 
     public Pie(PieTaste taste) {
-        super(NAME, WEIGHT, SUGAR_CONTENT);
+        super(NAME, PRICE, WEIGHT, SUGAR_CONTENT);
         this.taste = taste;
     }
 
@@ -42,5 +43,10 @@ public class Pie extends Bakery {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), taste);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", pie taste: " + taste.getDescription();
     }
 }

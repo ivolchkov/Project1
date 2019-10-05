@@ -12,6 +12,7 @@ public class Gift {
 
     private final Long id;
     private Integer weight;
+    private Long price;
     private final User owner;
     private List<AbstractSweet> sweets;
 
@@ -23,6 +24,7 @@ public class Gift {
         this.id = ++counter;
         this.owner = owner;
         this.weight = 0;
+        this.price = 0L;
         this.sweets = new ArrayList<>();
     }
 
@@ -35,6 +37,7 @@ public class Gift {
 
         for (AbstractSweet sweet : sweets) {
             this.weight += sweet.getWeight();
+            this.price += sweet.getPrice();
         }
     }
 
@@ -48,6 +51,10 @@ public class Gift {
 
     public Integer getWeight() {
         return weight;
+    }
+
+    public Long getPrice() {
+        return price;
     }
 
     public User getOwner() {
@@ -65,6 +72,7 @@ public class Gift {
 
         this.sweets.add(sweet);
         this.weight += sweet.getWeight();
+        this.price += sweet.getPrice();
     }
 
     public void removeSweet(AbstractSweet sweet) {
@@ -74,6 +82,7 @@ public class Gift {
 
         this.sweets.remove(sweet);
         this.weight -= sweet.getWeight();
+        this.price -= sweet.getPrice();
     }
 
     @Override
@@ -97,5 +106,20 @@ public class Gift {
     @Override
     public int hashCode() {
         return Objects.hash(id, weight, owner, sweets);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Gift № ").append(id).append(", ").
+                append("owner: ").append(owner.getName()).append(" ").append(owner.getSurname()).append(", ").
+                append("weight: ").append(weight).append("g").append(", ").
+                append("price: ").append(price).append("$\n");
+        for (AbstractSweet sweet : sweets) {
+            stringBuilder.append(sweet).append('\n');
+        }
+
+        return stringBuilder.toString();
     }
 }

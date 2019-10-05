@@ -6,13 +6,14 @@ import java.util.Objects;
 
 public class ChocolateBar extends Chocolate {
     private static final String NAME = "Chocolate bar";
+    private static final Long PRICE = 3L;
     private static final Integer WEIGHT = 100;
     private static final Byte SUGAR_CONTENT = 35;
 
     private final ChocolateBarType chocolateType;
 
     public ChocolateBar(ChocolateBarType type) {
-        super(NAME, WEIGHT, SUGAR_CONTENT);
+        super(NAME, PRICE, WEIGHT, SUGAR_CONTENT);
         this.chocolateType = type;
     }
 
@@ -42,5 +43,10 @@ public class ChocolateBar extends Chocolate {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), chocolateType);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", chocolate type: " + chocolateType.getDescription();
     }
 }

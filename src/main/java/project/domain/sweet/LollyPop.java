@@ -6,13 +6,14 @@ import java.util.Objects;
 
 public class LollyPop extends Caramel {
     private static final String NAME = "Lolly pop";
+    private static final Long PRICE = 2L;
     private static final Integer WEIGHT = 70;
     private static final Byte SUGAR_CONTENT = 80;
 
     private final Shape shape;
 
     public LollyPop(Shape type) {
-        super(NAME, WEIGHT, SUGAR_CONTENT);
+        super(NAME, PRICE, WEIGHT, SUGAR_CONTENT);
         this.shape = type;
     }
 
@@ -42,5 +43,10 @@ public class LollyPop extends Caramel {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), shape);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", lolly pop shape: " + shape.getDescription();
     }
 }

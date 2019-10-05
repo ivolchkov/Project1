@@ -7,12 +7,14 @@ public abstract class AbstractSweet {
 
     private final Long id;
     private final String name;
+    private final Long price;
     private final Integer weight;
     private final Byte sugarContent;
 
-    public AbstractSweet(String name, Integer weight, Byte sugarContent) {
+    public AbstractSweet(String name, Long price, Integer weight, Byte sugarContent) {
         this.id = ++counter;
         this.name = name;
+        this.price = price;
         this.weight = weight;
         this.sugarContent = sugarContent;
     }
@@ -27,6 +29,10 @@ public abstract class AbstractSweet {
 
     public Integer getWeight() {
         return weight;
+    }
+
+    public Long getPrice() {
+        return price;
     }
 
     public Byte getSugarContent() {
@@ -52,4 +58,18 @@ public abstract class AbstractSweet {
     public int hashCode() {
         return Objects.hash(weight, sugarContent);
     }
-}
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Sweet № ").append(id).append(", ").
+                append("name: ").append(name).append(", ").
+                append("weight: ").append(weight).append("g").append(", ").
+                append("sugar content: ").append(sugarContent).append('%').append(", ").
+                append("price: ").append(price).append('$');
+
+        return stringBuilder.toString();
+    }
+
+    }

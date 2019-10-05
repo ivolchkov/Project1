@@ -1,5 +1,7 @@
 package project.domain.user;
 
+import project.domain.sweet.AbstractSweet;
+
 import java.util.Objects;
 
 public class User {
@@ -59,6 +61,18 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, email, password);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("User № ").append(id).append(", ").
+                append("name: ").append(name).append(", ").
+                append("surname: ").append(surname).append(", ").
+                append("email: ").append(email);
+
+        return stringBuilder.toString();
     }
 
     public static class UserBuilder {
