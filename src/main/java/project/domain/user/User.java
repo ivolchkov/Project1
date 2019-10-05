@@ -1,7 +1,5 @@
 package project.domain.user;
 
-import project.domain.sweet.AbstractSweet;
-
 import java.util.Objects;
 
 public class User {
