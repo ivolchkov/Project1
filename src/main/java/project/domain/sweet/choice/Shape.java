@@ -1,11 +1,11 @@
 package project.domain.sweet.choice;
 
-public enum LollyPopType {
+public enum Shape {
     CIRCLE("Circle"), HEART("Heart"), ROOSTER("Rooster");
 
     String description;
 
-    LollyPopType(String description) {
+    Shape(String description) {
         this.description = description;
     }
 

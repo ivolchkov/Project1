@@ -3,11 +3,15 @@ package project.domain.sweet;
 import java.util.Objects;
 
 public abstract class AbstractSweet {
+    private static Long counter = 0L;
+
+    private final Long id;
     private final String name;
     private final Integer weight;
     private final Byte sugarContent;
 
     public AbstractSweet(String name, Integer weight, Byte sugarContent) {
+        this.id = ++counter;
         this.name = name;
         this.weight = weight;
         this.sugarContent = sugarContent;
@@ -15,6 +19,10 @@ public abstract class AbstractSweet {
 
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Integer getWeight() {

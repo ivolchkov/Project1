@@ -1,6 +1,6 @@
 package project.domain.sweet;
 
-import project.domain.sweet.choice.LollyPopType;
+import project.domain.sweet.choice.Shape;
 
 import java.util.Objects;
 
@@ -9,15 +9,15 @@ public class LollyPop extends Caramel {
     private static final Integer WEIGHT = 70;
     private static final Byte SUGAR_CONTENT = 80;
 
-    private final LollyPopType lollyPopType;
+    private final Shape shape;
 
-    public LollyPop(LollyPopType type) {
+    public LollyPop(Shape type) {
         super(NAME, WEIGHT, SUGAR_CONTENT);
-        this.lollyPopType= type;
+        this.shape = type;
     }
 
-    public LollyPopType getLollyPopType() {
-        return lollyPopType;
+    public Shape getShape() {
+        return shape;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class LollyPop extends Caramel {
 
         LollyPop lollyPop = (LollyPop) o;
 
-        return lollyPopType== lollyPop.lollyPopType;
+        return shape == lollyPop.shape;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), lollyPopType);
+        return Objects.hash(super.hashCode(), shape);
     }
 }
