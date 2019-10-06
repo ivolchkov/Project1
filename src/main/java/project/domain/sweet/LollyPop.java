@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class LollyPop extends Caramel {
     private static final String NAME = "Lolly pop";
-    private static final Long PRICE = 2L;
+    private static final Integer PRICE = 2;
     private static final Integer WEIGHT = 70;
     private static final Byte SUGAR_CONTENT = 80;
 
