@@ -7,7 +7,7 @@ import static project.domain.sweet.choice.SweetType.*;
 public abstract class Caramel extends AbstractSweet {
     private static final SweetType TYPE = CARAMEL;
 
-    public Caramel(String name, Long price, Integer weight, Byte sugarContent) {
+    public Caramel(String name, Integer price, Integer weight, Byte sugarContent) {
         super(name, price, weight, sugarContent);
     }
 

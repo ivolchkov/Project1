@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Pie extends Bakery {
     private static final String NAME = "Pie";
-    private static final Long PRICE = 30L;
+    private static final Integer PRICE = 30;
     private static final Integer WEIGHT = 800;
     private static final Byte SUGAR_CONTENT = 30;
 

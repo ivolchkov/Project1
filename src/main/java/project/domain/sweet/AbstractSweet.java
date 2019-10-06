@@ -1,17 +1,23 @@
 package project.domain.sweet;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public abstract class AbstractSweet {
+    public static final Comparator<AbstractSweet> COMPARE_BY_NAME = (current,other) -> current.name.compareTo(other.name);
+    public static final Comparator<AbstractSweet> COMPARE_BY_PRICE = (current,other) -> current.price - other.price;
+    public static final Comparator<AbstractSweet> COMPARE_BY_WEIGHT = (current,other) -> current.weight - other.weight;
+    public static final Comparator<AbstractSweet> COMPARE_BY_SUGAR_CONTENT = (current,other) -> current.sugarContent - other.sugarContent;
+
     private static Long counter = 0L;
 
     private final Long id;
     private final String name;
-    private final Long price;
+    private final Integer price;
     private final Integer weight;
     private final Byte sugarContent;
 
-    public AbstractSweet(String name, Long price, Integer weight, Byte sugarContent) {
+    public AbstractSweet(String name, Integer price, Integer weight, Byte sugarContent) {
         this.id = ++counter;
         this.name = name;
         this.price = price;
@@ -31,7 +37,7 @@ public abstract class AbstractSweet {
         return weight;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

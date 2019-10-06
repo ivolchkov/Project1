@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ChocolateSweet extends Chocolate {
     private static final String NAME = "Chocolate sweet";
-    private static final Long PRICE = 1L;
+    private static final Integer PRICE = 1;
     private static final Integer WEIGHT = 30;
     private static final Byte SUGAR_CONTENT = 40;
 

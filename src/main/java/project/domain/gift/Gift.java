@@ -12,9 +12,9 @@ public class Gift {
 
     private final Long id;
     private Integer weight;
-    private Long price;
+    private Integer price;
     private final User owner;
-    private List<AbstractSweet> sweets;
+    private final List<AbstractSweet> sweets;
 
     public Gift(User owner) {
         if (owner == null) {
@@ -24,7 +24,7 @@ public class Gift {
         this.id = ++counter;
         this.owner = owner;
         this.weight = 0;
-        this.price = 0L;
+        this.price = 0;
         this.sweets = new ArrayList<>();
     }
 
@@ -33,9 +33,9 @@ public class Gift {
         if (sweets == null) {
             throw new IllegalArgumentException("There are no sweets");
         }
-        this.sweets = sweets;
 
         for (AbstractSweet sweet : sweets) {
+            this.sweets.add(sweet);
             this.weight += sweet.getWeight();
             this.price += sweet.getPrice();
         }
@@ -53,7 +53,7 @@ public class Gift {
         return weight;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

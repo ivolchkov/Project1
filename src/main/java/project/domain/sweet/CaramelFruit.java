@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class CaramelFruit extends Caramel {
     private static final String NAME = "Caramel fruit";
-    private static final Long PRICE = 5L;
+    private static final Integer PRICE = 5;
     private static final Integer WEIGHT = 80;
     private static final Byte SUGAR_CONTENT = 30;
 
