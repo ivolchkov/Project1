@@ -51,8 +51,8 @@ public class UserServiceImpl implements UserService {
         final Optional<User> user = repository.findByEmail(email);
 
         if (!user.isPresent()) {
-            LOGGER.warn("There is no student with this e-mail");
-            throw new StudentNotFoundException("There is no student with this e-mail");
+            LOGGER.warn("There is no user with this e-mail");
+            throw new StudentNotFoundException("There is no user with this e-mail");
         } else {
             if (user.get().getPassword().equals(encodedPassword)) {
                 return user.get();
