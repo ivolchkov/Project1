@@ -23,9 +23,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
     public Optional<User> findByEmail(String email) {
         Optional<User> user = Optional.empty();
 
-        for (User s: idToUser.values()) {
-            if ( Objects.equals(s.getEmail(), email) ) {
-                user = Optional.of(s);
+        for (User usr: idToUser.values()) {
+            if ( Objects.equals(usr.getEmail(), email) ) {
+                user = Optional.of(usr);
 
                 return user;
             }

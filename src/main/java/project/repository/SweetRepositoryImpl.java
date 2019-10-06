@@ -24,16 +24,6 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
     }
 
     @Override
-    public void update(AbstractSweet sweet) {
-        idToSweet.put(sweet.getId(), sweet);
-    }
-
-    @Override
-    public Optional<AbstractSweet> deleteById(Long id) {
-        return Optional.ofNullable(idToSweet.remove(id));
-    }
-
-    @Override
     public List<AbstractSweet> findByName(String name) {
         List<AbstractSweet> suitableSweets = new ArrayList<>();
 
@@ -83,5 +73,15 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
         }
 
         return suitableSweets;
+    }
+
+    @Override
+    public void update(AbstractSweet sweet) {
+        idToSweet.put(sweet.getId(), sweet);
+    }
+
+    @Override
+    public Optional<AbstractSweet> deleteById(Long id) {
+        return Optional.ofNullable(idToSweet.remove(id));
     }
 }

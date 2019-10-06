@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface GiftRepository<T> extends Repository<T> {
     Optional<T> findByOwner(User owner);
-    List<AbstractSweet> findSweetsBySugarContent();
-    List<AbstractSweet> findSweetsByPrice();
-    List<AbstractSweet> findSweetsByWeight();
-    List<AbstractSweet> findSweetsBySugarContentRange(Byte start, Byte end);
+    List<AbstractSweet> findSweetsBySugarContent(Long id);
+    List<AbstractSweet> findSweetsByPrice(Long id);
+    List<AbstractSweet> findSweetsByWeight(Long id);
+    List<AbstractSweet> findSweetsBySugarContentRange(Long id, Byte start, Byte end);
 
-    void removeSweet(AbstractSweet sweet);
-    void addSweet(AbstractSweet sweet);
+    void removeSweet(Long id, AbstractSweet sweet);
+    void addSweet(Long id, AbstractSweet sweet);
 
     Optional<T> deleteByOwner(User owner);
 }
