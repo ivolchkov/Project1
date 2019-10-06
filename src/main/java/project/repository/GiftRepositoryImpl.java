@@ -6,7 +6,7 @@ import project.domain.user.User;
 
 import java.util.*;
 
-public class GiftRepositoryImpl implements GiftRepository<Gift> {
+public class GiftRepositoryImpl implements GiftRepository {
     private final Map<Long,Gift> idToGift = new HashMap<>();
 
     @Override
@@ -41,7 +41,7 @@ public class GiftRepositoryImpl implements GiftRepository<Gift> {
 
     @Override
     public List<AbstractSweet> findSweetsBySugarContent(Long id) {
-        List<AbstractSweet> sweets = idToGift.get(id).getSweets();
+        final List<AbstractSweet> sweets = idToGift.get(id).getSweets();
 
         sweets.sort(AbstractSweet.COMPARE_BY_SUGAR_CONTENT);
 
@@ -50,7 +50,7 @@ public class GiftRepositoryImpl implements GiftRepository<Gift> {
 
     @Override
     public List<AbstractSweet> findSweetsByPrice(Long id) {
-        List<AbstractSweet> sweets = idToGift.get(id).getSweets();
+        final List<AbstractSweet> sweets = idToGift.get(id).getSweets();
 
         sweets.sort(AbstractSweet.COMPARE_BY_PRICE);
 
@@ -59,7 +59,7 @@ public class GiftRepositoryImpl implements GiftRepository<Gift> {
 
     @Override
     public List<AbstractSweet> findSweetsByWeight(Long id) {
-        List<AbstractSweet> sweets = idToGift.get(id).getSweets();
+        final List<AbstractSweet> sweets = idToGift.get(id).getSweets();
 
         sweets.sort(AbstractSweet.COMPARE_BY_WEIGHT);
 
@@ -68,8 +68,8 @@ public class GiftRepositoryImpl implements GiftRepository<Gift> {
 
     @Override
     public List<AbstractSweet> findSweetsBySugarContentRange(Long id, Byte start, Byte end) {
-        List<AbstractSweet> suitableSweets = new ArrayList<>();
-        List<AbstractSweet> sweets = idToGift.get(id).getSweets();
+        final List<AbstractSweet> sweets = idToGift.get(id).getSweets();
+        final List<AbstractSweet> suitableSweets = new ArrayList<>();
 
         for (AbstractSweet sweet: sweets) {
             if ( sweet.getSugarContent() >= start && sweet.getSugarContent() < end ) {
@@ -87,13 +87,13 @@ public class GiftRepositoryImpl implements GiftRepository<Gift> {
 
     @Override
     public void removeSweet(Long id, AbstractSweet sweet) {
-        Gift gift = idToGift.get(id);
+        final Gift gift = idToGift.get(id);
         gift.removeSweet(sweet);
     }
 
     @Override
     public void addSweet(Long id, AbstractSweet sweet) {
-        Gift gift = idToGift.get(id);
+        final Gift gift = idToGift.get(id);
         gift.addSweet(sweet);
     }
 

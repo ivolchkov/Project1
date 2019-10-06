@@ -1,0 +1,12 @@
+WARN  file: Method:validate() Line:24 - User is not valid
+WARN  file: Method:validateName() Line:56 - Incorrect name
+WARN  file: Method:validateEmail() Line:47 - Incorrect e-mail
+WARN  file: Method:validate() Line:24 - User is not valid
+WARN  file: Method:validatePassword() Line:38 - Incorrect password
+WARN  file: Method:validateSurname() Line:65 - Incorrect surname
+WARN  file: Method:validateName() Line:56 - Incorrect name
+WARN  file: Method:validateEmail() Line:47 - Incorrect e-mail
+WARN  file: Method:validate() Line:24 - User is not valid
+WARN  file: Method:validatePassword() Line:38 - Incorrect password
+WARN  file: Method:validateSurname() Line:65 - Incorrect surname
+WARN  file: Method:validateName() Line:56 - Incorrect name

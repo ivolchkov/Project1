@@ -1,11 +1,13 @@
 package project.repository;
 
+import project.domain.sweet.AbstractSweet;
+
 import java.util.List;
 
-public interface SweetRepository<T> extends Repository<T> {
-    List<T>findByName(String name);
-    List<T> findBySugarContentRange(Byte start, Byte end);
-    List<T> findByPriceRange(Integer start, Integer end);
-    List<T> findByWeightRange(Integer start, Integer end);
+public interface SweetRepository extends Repository<AbstractSweet> {
+    List<AbstractSweet>findByName(String name);
+    List<AbstractSweet> findBySugarContentRange(Byte start, Byte end);
+    List<AbstractSweet> findByPriceRange(Integer start, Integer end);
+    List<AbstractSweet> findByWeightRange(Integer start, Integer end);
 }
 

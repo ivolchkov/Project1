@@ -5,7 +5,7 @@ import project.domain.sweet.AbstractSweet;
 
 import java.util.*;
 
-public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
+public class SweetRepositoryImpl implements SweetRepository {
     private final Map<Long,AbstractSweet> idToSweet = new HashMap<>();
 
     @Override
@@ -25,7 +25,7 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
 
     @Override
     public List<AbstractSweet> findByName(String name) {
-        List<AbstractSweet> suitableSweets = new ArrayList<>();
+        final List<AbstractSweet> suitableSweets = new ArrayList<>();
 
         for (AbstractSweet sweet: idToSweet.values()) {
             if ( Objects.equals(sweet.getName(), name) ) {
@@ -38,7 +38,7 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
 
     @Override
     public List<AbstractSweet> findBySugarContentRange(Byte start, Byte end) {
-        List<AbstractSweet> suitableSweets = new ArrayList<>();
+        final List<AbstractSweet> suitableSweets = new ArrayList<>();
 
         for (AbstractSweet sweet: idToSweet.values()) {
             if ( sweet.getSugarContent() >= start && sweet.getSugarContent() < end ) {
@@ -51,7 +51,7 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
 
     @Override
     public List<AbstractSweet> findByPriceRange(Integer start, Integer end) {
-        List<AbstractSweet> suitableSweets = new ArrayList<>();
+        final List<AbstractSweet> suitableSweets = new ArrayList<>();
 
         for (AbstractSweet sweet: idToSweet.values()) {
             if ( sweet.getPrice() >= start && sweet.getPrice() < end ) {
@@ -64,7 +64,7 @@ public class SweetRepositoryImpl implements SweetRepository<AbstractSweet> {
 
     @Override
     public List<AbstractSweet> findByWeightRange(Integer start, Integer end) {
-        List<AbstractSweet> suitableSweets = new ArrayList<>();
+        final List<AbstractSweet> suitableSweets = new ArrayList<>();
 
         for (AbstractSweet sweet: idToSweet.values()) {
             if ( sweet.getWeight() >= start && sweet.getWeight() < end ) {

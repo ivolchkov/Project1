@@ -1,14 +1,15 @@
 package project.repository;
 
 
+import project.domain.gift.Gift;
 import project.domain.sweet.AbstractSweet;
 import project.domain.user.User;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface GiftRepository<T> extends Repository<T> {
-    Optional<T> findByOwner(User owner);
+public interface GiftRepository extends Repository<Gift> {
+    Optional<Gift> findByOwner(User owner);
     List<AbstractSweet> findSweetsBySugarContent(Long id);
     List<AbstractSweet> findSweetsByPrice(Long id);
     List<AbstractSweet> findSweetsByWeight(Long id);
@@ -17,5 +18,5 @@ public interface GiftRepository<T> extends Repository<T> {
     void removeSweet(Long id, AbstractSweet sweet);
     void addSweet(Long id, AbstractSweet sweet);
 
-    Optional<T> deleteByOwner(User owner);
+    Optional<Gift> deleteByOwner(User owner);
 }

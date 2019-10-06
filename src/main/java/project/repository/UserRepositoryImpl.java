@@ -6,7 +6,7 @@ import project.domain.user.User;
 import java.util.*;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository<User> {
+public class UserRepositoryImpl implements UserRepository {
     private final Map<Long,User> idToUser = new HashMap<>();
 
     @Override
@@ -36,7 +36,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
 
     @Override
     public List<User> findByName(String name) {
-        List<User> suitableUsers = new ArrayList<>();
+        final List<User> suitableUsers = new ArrayList<>();
 
         for (User user: idToUser.values()) {
             if ( Objects.equals(user.getName(), name) ) {

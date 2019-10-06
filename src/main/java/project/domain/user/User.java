@@ -7,7 +7,7 @@ public class User {
     private final String name;
     private final String surname;
     private final String email;
-    private String password;
+    private final String password;
 
     private User(UserBuilder builder) {
         this.id = builder.id;
@@ -15,6 +15,14 @@ public class User {
         this.surname = builder.surname;
         this.email = builder.email;
         this.password = builder.password;
+    }
+
+    public User(User user, String password) {
+        this.id = user.id;
+        this.name = user.name;
+        this.surname = user.surname;
+        this.email = user.email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -104,12 +112,6 @@ public class User {
 
         public User build() {
             return new User(this);
-        }
-    }
-
-    public static class UserPasswordBuilder {
-        public void setPassword(User user, String password) {
-            user.password = password;
         }
     }
 }
