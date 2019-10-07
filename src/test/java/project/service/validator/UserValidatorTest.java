@@ -73,7 +73,4 @@ public class UserValidatorTest {
 
         validator.validate(student);
     }
-
-
-
 }

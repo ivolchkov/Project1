@@ -115,5 +115,4 @@ public class UserServiceImplTest {
 
         userService.login("igorik@gmail.com", "test");
     }
-
 }
