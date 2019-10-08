@@ -69,11 +69,11 @@ public abstract class AbstractSweet {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Sweet № ").append(id).append(", ").
-                append("name: ").append(name).append(", ").
-                append("weight: ").append(weight).append("g").append(", ").
-                append("sugar content: ").append(sugarContent).append('%').append(", ").
-                append("price: ").append(price).append('$');
+        stringBuilder.append("Sweet № ").append(String.format("%-2d, ", id)).
+                append(String.format("name: %-15s, ", name)).
+                append(String.format("weight: %-3dg, ", weight)).
+                append(String.format("sugar content: %-2d%%, ", sugarContent)).
+                append(String.format("price: %-2d$", price));
 
         return stringBuilder.toString();
     }

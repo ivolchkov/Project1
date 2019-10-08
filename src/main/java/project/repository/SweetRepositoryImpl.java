@@ -1,10 +1,12 @@
 package project.repository;
 
+import org.springframework.stereotype.Repository;
 import project.domain.sweet.AbstractSweet;
 
 
 import java.util.*;
 
+@Repository
 public class SweetRepositoryImpl implements SweetRepository {
     private final Map<Long,AbstractSweet> idToSweet = new HashMap<>();
 

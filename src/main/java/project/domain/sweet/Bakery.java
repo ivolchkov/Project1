@@ -17,6 +17,6 @@ public abstract class Bakery extends AbstractSweet {
 
     @Override
     public String toString() {
-        return super.toString() + ", sweet type: " + BAKERY.getDescription();
+        return super.toString() + String.format(", sweet type: %-9s", BAKERY.getDescription());
     }
 }

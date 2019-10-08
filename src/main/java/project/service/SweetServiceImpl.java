@@ -39,7 +39,7 @@ public class SweetServiceImpl implements SweetService {
             throw new IllegalArgumentException("There is no sweet by this id!");
         });
     }
-    //Test
+
     @Override
     public List<AbstractSweet> showAllSweets() {
         List<AbstractSweet> sweets = repository.findAll();

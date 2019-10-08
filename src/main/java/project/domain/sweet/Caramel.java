@@ -17,6 +17,6 @@ public abstract class Caramel extends AbstractSweet {
 
     @Override
     public String toString() {
-        return super.toString() + ", sweet type: " + CARAMEL.getDescription();
+        return super.toString() + String.format(", sweet type: %-9s", CARAMEL.getDescription());
     }
 }

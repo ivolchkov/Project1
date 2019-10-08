@@ -6,9 +6,7 @@ import project.domain.gift.Gift;
 import project.domain.sweet.*;
 import project.domain.sweet.choice.*;
 import project.domain.user.User;
-import project.service.GiftService;
-import project.service.SweetService;
-import project.service.UserService;
+import project.service.*;
 import project.service.exception.InvalidRegistrationException;
 
 import java.util.*;
@@ -67,7 +65,7 @@ public class Menu {
             languageLocale = "US";
         }
         Locale locale = new Locale(country, languageLocale);
-        MANAGER.changeResourse(locale);
+        MANAGER.changeResource(locale);
     }
 
     private void signUp() {
@@ -94,21 +92,21 @@ public class Menu {
 
         try {
             userService.register(user);
-
-            System.out.println(MANAGER.getString("registration.success"));
-            System.out.println(MANAGER.getString("registration.yourId") + user.getId());
-            System.out.println(MANAGER.getString("registration.nextStep"));
-
-            int signIn = Integer.parseInt(IN.next());
-
-            if (signIn == 1) {
-                signIn();
-            } else {
-                System.out.println(MANAGER.getString("registration.goodBye"));
-                System.exit(0);
-            }
         } catch (Exception e) {
             System.out.println(MANAGER.getString("registration.invalidRegistration") + '\n' + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println(MANAGER.getString("registration.success"));
+        System.out.println(MANAGER.getString("registration.yourId") + user.getId());
+        System.out.println(MANAGER.getString("registration.nextStep"));
+
+        int signIn = Integer.parseInt(IN.next());
+
+        if (signIn == 1) {
+            signIn();
+        } else {
+            System.out.println(MANAGER.getString("registration.goodBye"));
+            System.exit(0);
         }
     }
 
@@ -156,6 +154,39 @@ public class Menu {
         }
     }
 
+    private void addOrder(User user) {
+        try {
+            giftService.showGiftByOwner(user);
+            System.out.println(MANAGER.getString("orderService.alreadyHasGift"));
+        } catch (IllegalArgumentException e) {
+            boolean isFinish = false;
+            Map<Long, Integer> order = new HashMap<>();
+
+            System.out.println(MANAGER.getString("orderService.addSweets"));
+
+            for (AbstractSweet sweet: sweetService.showAllSweets()) {
+                System.out.println(sweet);
+            }
+
+            while (!isFinish) {
+                String choice = IN.next();
+                Long id = Long.parseLong(choice);
+                choice = IN.next();
+                Integer count = Integer.parseInt(choice);
+
+                if ( id < 1 || id > 19) {
+                    isFinish = true;
+                } else {
+                    order.put(id, count);
+                }
+            }
+
+            List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
+            Gift gift = new Gift(user, sweets);
+            giftService.addGift(gift);
+        }
+    }
+
     private void orderService(User user) {
         boolean isFinish = false;
 
@@ -165,34 +196,39 @@ public class Menu {
 
             switch (choice) {
                 case 1: {
-                    showSweetsBySugarContent(user);
+                    showCurrentGift(user);
                     break;
                 }
                 case 2: {
-                    showSweetsByPrice(user);
+                    showSweetsBySugarContent(user);
                     break;
                 }
                 case 3: {
-                    showSweetsByWeight(user);
+                    showSweetsByPrice(user);
                     break;
                 }
                 case 4: {
-                    showSweetsBySugarContentRange(user);
+                    showSweetsByWeight(user);
                     break;
                 }
                 case 5: {
-                    addSweetToOrder(user);
+                    showSweetsBySugarContentRange(user);
                     break;
                 }
                 case 6: {
-                    removeSweetFromOrder(user);
+                    addSweetToOrder(user);
                     break;
                 }
                 case 7: {
-                    deleteCurrentGift(user);
+                    removeSweetFromOrder(user);
                     break;
                 }
                 case 8: {
+                    deleteCurrentGift(user);
+                    isFinish = true;
+                    break;
+                }
+                case 9: {
                     isFinish = true;
                     break;
                 }
@@ -203,45 +239,14 @@ public class Menu {
         }
     }
 
-    private void deleteCurrentGift(User user) {
-        giftService.deleteByOwner(user);
+    private void showCurrentGift(User user) {
+        Gift gift = giftService.showGiftByOwner(user);
+
+        System.out.println(gift);
     }
 
-    private void removeSweetFromOrder(User user) {
-        List<AbstractSweet> sweets = giftService.showGiftByOwner(user).getSweets();
-
-        for (AbstractSweet sweet: sweets) {
-            System.out.println(sweet);
-        }
-        System.out.println(MANAGER.getString("orderService.sweetToRemove"));
-        Long id = Long.parseLong(IN.next());
-        giftService.removeSweet(user, sweetService.showSweetById(id));
-    }
-
-    private void addSweetToOrder(User user) {
-        for (AbstractSweet sweet: sweetService.showAllSweets()) {
-            System.out.println(sweet);
-        }
-        System.out.println(MANAGER.getString("orderService.sweetToAdd"));
-        Long id = Long.parseLong(IN.next());
-        giftService.addSweet(user, sweetService.showSweetById(id));
-    }
-
-    private void showSweetsBySugarContentRange(User user) {
-        System.out.println(MANAGER.getString("orderService.sugarContentRange"));
-        String choice = IN.next();
-        Byte start = Byte.parseByte(choice);
-        Byte end = Byte.parseByte(choice);
-
-        List<AbstractSweet> sweets = giftService.showSweetsBySugarContentRange(user, start, end);
-
-        for (AbstractSweet sweet: sweets) {
-            System.out.println(sweet);
-        }
-    }
-
-    private void showSweetsByWeight(User user) {
-        List<AbstractSweet> sweets = giftService.sortSweetsByWeight(user);
+    private void showSweetsBySugarContent(User user) {
+        List<AbstractSweet> sweets = giftService.sortSweetsBySugarContent(user);
 
         for (AbstractSweet sweet: sweets) {
             System.out.println(sweet);
@@ -256,43 +261,51 @@ public class Menu {
         }
     }
 
-    private void showSweetsBySugarContent(User user) {
-        List<AbstractSweet> sweets = giftService.sortSweetsBySugarContent(user);
+    private void showSweetsByWeight(User user) {
+        List<AbstractSweet> sweets = giftService.sortSweetsByWeight(user);
 
         for (AbstractSweet sweet: sweets) {
             System.out.println(sweet);
         }
     }
 
-    private void addOrder(User user) {
-        try {
-            giftService.showGiftByOwner(user);
-            System.out.println(MANAGER.getString("orderService.alreadyHasGift"));
-        } catch (IllegalArgumentException e) {
-            boolean isFinish = false;
-            Map<Long, Integer> order = new HashMap<>();
+    private void showSweetsBySugarContentRange(User user) {
+        System.out.println(MANAGER.getString("orderService.sugarContentRange"));
+        String choice = IN.next();
+        Byte start = Byte.parseByte(choice);
+        choice = IN.next();
+        Byte end = Byte.parseByte(choice);
 
-            System.out.println(MANAGER.getString("orderService.addSweets"));
-            for (AbstractSweet sweet: sweetService.showAllSweets()) {
-                System.out.println(sweet);
-            }
-            while (!isFinish) {
-                String choice = IN.next();
-                Long id = Long.parseLong(choice);
-                Integer count = Integer.parseInt(choice);
+        List<AbstractSweet> sweets = giftService.showSweetsBySugarContentRange(user, start, end);
 
-                if ( id < 1 || id > 19) {
-                    isFinish = true;
-                } else {
-                    order.put(id, count);
-                }
-            }
-            List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
-            Gift gift = new Gift(user, sweets);
-            giftService.addGift(gift);
+        for (AbstractSweet sweet: sweets) {
+            System.out.println(sweet);
         }
     }
 
+    private void addSweetToOrder(User user) {
+        for (AbstractSweet sweet: sweetService.showAllSweets()) {
+            System.out.println(sweet);
+        }
+        System.out.println(MANAGER.getString("orderService.sweetToAdd"));
+        Long id = Long.parseLong(IN.next());
+        giftService.addSweet(user, sweetService.showSweetById(id));
+    }
+
+    private void removeSweetFromOrder(User user) {
+        List<AbstractSweet> sweets = giftService.showGiftByOwner(user).getSweets();
+
+        for (AbstractSweet sweet: sweets) {
+            System.out.println(sweet);
+        }
+        System.out.println(MANAGER.getString("orderService.sweetToRemove"));
+        Long id = Long.parseLong(IN.next());
+        giftService.removeSweet(user, sweetService.showSweetById(id));
+    }
+
+    private void deleteCurrentGift(User user) {
+        giftService.deleteByOwner(user);
+    }
 
     private void autoFilling() {
         User igor = new User.UserBuilder().withName("Igor").

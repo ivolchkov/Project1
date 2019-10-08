@@ -6,12 +6,12 @@ import java.util.ResourceBundle;
 public enum ResourceManager {
     INSTANCE;
     private ResourceBundle resourceBundle;
-    private final String resourceName = "property.text";
+    private final String resourceName = "text";
     private ResourceManager() {
         resourceBundle = ResourceBundle.getBundle(resourceName, Locale.getDefault());
     }
 
-    public void changeResourse(Locale locale) {
+    public void changeResource(Locale locale) {
         resourceBundle = ResourceBundle.getBundle(resourceName, locale);
     }
 

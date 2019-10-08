@@ -25,7 +25,6 @@ public class GiftServiceImpl implements GiftService {
         this.repository = repository;
     }
 
-    //Test
     @Override
     public Gift addGift(Gift gift) {
         if ( gift == null ) {

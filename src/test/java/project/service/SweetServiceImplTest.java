@@ -99,4 +99,24 @@ public class SweetServiceImplTest {
 
         service.getSweetsByOrder(null);
     }
+
+    @Test
+    public void shouldReturnAllSweet() {
+        AbstractSweet sweet = new Tartalet(TartaletFilling.CHERRY);
+        List<AbstractSweet> expected = Arrays.asList(sweet, sweet);
+        when(repository.findAll()).thenReturn(expected);
+        List<AbstractSweet> actual = service.showAllSweets();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldReturnEmptyList() {
+        List<AbstractSweet> expected = Collections.emptyList();
+        when(repository.findAll()).thenReturn(expected);
+        List<AbstractSweet> actual = service.showAllSweets();
+
+        assertEquals(expected, actual);
+    }
+
 }

@@ -55,6 +55,22 @@ public class GiftServiceImplTest {
     }
 
     @Test
+    public void shouldAddGift() {
+        when(repository.save(any(Gift.class))).thenReturn(gift);
+        Gift actual = service.addGift(gift);
+
+        assertEquals(gift, actual);
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenAddNullGift() {
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Gift is empty!");
+
+        service.addGift(null);
+    }
+
+    @Test
     public void shouldShowGiftByOwner() {
         when(repository.findByOwner(any(User.class))).thenReturn(Optional.of(gift));
         Gift actual = service.showGiftByOwner(user);

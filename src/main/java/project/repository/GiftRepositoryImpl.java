@@ -1,11 +1,13 @@
 package project.repository;
 
+import org.springframework.stereotype.Repository;
 import project.domain.gift.Gift;
 import project.domain.sweet.AbstractSweet;
 import project.domain.user.User;
 
 import java.util.*;
 
+@Repository
 public class GiftRepositoryImpl implements GiftRepository {
     private final Map<Long,Gift> idToGift = new HashMap<>();
 
