@@ -11,7 +11,6 @@ import project.service.SweetService;
 import project.service.UserService;
 import project.service.exception.InvalidRegistrationException;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -109,7 +108,7 @@ public class Menu {
                 System.exit(0);
             }
         } catch (Exception e) {
-            System.out.println(MANAGER.getString("registration.invalidRegistration") + e.getMessage());
+            System.out.println(MANAGER.getString("registration.invalidRegistration") + '\n' + e.getMessage());
         }
     }
 
@@ -139,12 +138,10 @@ public class Menu {
 
             switch (choice) {
                 case 1: {
-                    //Add order
                     addOrder(user);
                     break;
                 }
                 case 2: {
-                    //Show orders
                     orderService(user);
                     break;
                 }
@@ -165,15 +162,7 @@ public class Menu {
         while (!isFinish) {
             System.out.println(MANAGER.getString("orderService.selection"));
             int choice = Integer.parseInt(IN.next());
-//            List<AbstractSweet> sortSweetsBySugarContent(Long id);
-//            List<AbstractSweet> sortSweetsByPrice(Long id);
-//            List<AbstractSweet> sortSweetsByWeight(Long id);
-//            List<AbstractSweet> showSweetsBySugarContentRange(Long id, Byte start, Byte end);
-//
-//            void removeSweet(Long id, AbstractSweet sweet);
-//            void addSweet(Long id, AbstractSweet sweet);
-//
-//            Gift deleteByOwner(User owner);
+
             switch (choice) {
                 case 1: {
                     showSweetsBySugarContent(user);
@@ -188,15 +177,19 @@ public class Menu {
                     break;
                 }
                 case 4: {
+                    showSweetsBySugarContentRange(user);
                     break;
                 }
                 case 5: {
+                    addSweetToOrder(user);
                     break;
                 }
                 case 6: {
+                    removeSweetFromOrder(user);
                     break;
                 }
                 case 7: {
+                    deleteCurrentGift(user);
                     break;
                 }
                 case 8: {
@@ -207,6 +200,51 @@ public class Menu {
                     throw new IllegalArgumentException("Invalid operation");
                 }
             }
+        }
+    }
+
+    private void deleteCurrentGift(User user) {
+        giftService.deleteByOwner(user);
+    }
+
+    private void removeSweetFromOrder(User user) {
+        List<AbstractSweet> sweets = giftService.showGiftByOwner(user).getSweets();
+
+        for (AbstractSweet sweet: sweets) {
+            System.out.println(sweet);
+        }
+        System.out.println(MANAGER.getString("orderService.sweetToRemove"));
+        Long id = Long.parseLong(IN.next());
+        giftService.removeSweet(user, sweetService.showSweetById(id));
+    }
+
+    private void addSweetToOrder(User user) {
+        for (AbstractSweet sweet: sweetService.showAllSweets()) {
+            System.out.println(sweet);
+        }
+        System.out.println(MANAGER.getString("orderService.sweetToAdd"));
+        Long id = Long.parseLong(IN.next());
+        giftService.addSweet(user, sweetService.showSweetById(id));
+    }
+
+    private void showSweetsBySugarContentRange(User user) {
+        System.out.println(MANAGER.getString("orderService.sugarContentRange"));
+        String choice = IN.next();
+        Byte start = Byte.parseByte(choice);
+        Byte end = Byte.parseByte(choice);
+
+        List<AbstractSweet> sweets = giftService.showSweetsBySugarContentRange(user, start, end);
+
+        for (AbstractSweet sweet: sweets) {
+            System.out.println(sweet);
+        }
+    }
+
+    private void showSweetsByWeight(User user) {
+        List<AbstractSweet> sweets = giftService.sortSweetsByWeight(user);
+
+        for (AbstractSweet sweet: sweets) {
+            System.out.println(sweet);
         }
     }
 
@@ -227,27 +265,32 @@ public class Menu {
     }
 
     private void addOrder(User user) {
-        boolean isFinish = false;
-        Map<Long, Integer> order = new HashMap<>();
+        try {
+            giftService.showGiftByOwner(user);
+            System.out.println(MANAGER.getString("orderService.alreadyHasGift"));
+        } catch (IllegalArgumentException e) {
+            boolean isFinish = false;
+            Map<Long, Integer> order = new HashMap<>();
 
-        System.out.println(MANAGER.getString("order.addSweets"));
-        for (AbstractSweet sweet: sweetService.showAllSweets()) {
-            System.out.println(sweet);
-        }
-        while (!isFinish) {
-            String choice = IN.next();
-            Long id = Long.parseLong(choice);
-            Integer count = Integer.parseInt(choice);
-
-            if ( id < 1 || id > 19) {
-                isFinish = true;
-            } else {
-                order.put(id, count);
+            System.out.println(MANAGER.getString("orderService.addSweets"));
+            for (AbstractSweet sweet: sweetService.showAllSweets()) {
+                System.out.println(sweet);
             }
+            while (!isFinish) {
+                String choice = IN.next();
+                Long id = Long.parseLong(choice);
+                Integer count = Integer.parseInt(choice);
+
+                if ( id < 1 || id > 19) {
+                    isFinish = true;
+                } else {
+                    order.put(id, count);
+                }
+            }
+            List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
+            Gift gift = new Gift(user, sweets);
+            giftService.addGift(gift);
         }
-        List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
-        Gift gift = new Gift(user, sweets);
-        giftService.addGift(gift);
     }
 
 
@@ -288,8 +331,6 @@ public class Menu {
         sweetService.addSweet(new Tartalet(TartaletFilling.CHERRY));
         sweetService.addSweet(new Tartalet(TartaletFilling.STRAWBERRY));
         sweetService.addSweet(new Tartalet(TartaletFilling.RASPBERRY));
-
-
 
     }
 }
