@@ -1,19 +1,20 @@
 package project.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import project.domain.sweet.AbstractSweet;
 import project.repository.SweetRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+@Service
 public class SweetServiceImpl implements SweetService {
     private static final Logger LOGGER = Logger.getLogger("file");
 
     private final SweetRepository repository;
 
+    @Autowired
     public SweetServiceImpl(SweetRepository repository) {
         this.repository = repository;
     }
@@ -33,10 +34,17 @@ public class SweetServiceImpl implements SweetService {
             LOGGER.warn("Invalid id!");
             throw new IllegalArgumentException("Invalid id!");
         }
-        return repository.findById(id).orElseThrow(()-> {
+        return repository.findById(id).<RuntimeException>orElseThrow(()-> {
             LOGGER.warn("There is no sweet by this id!");
             throw new IllegalArgumentException("There is no sweet by this id!");
         });
+    }
+    //Test
+    @Override
+    public List<AbstractSweet> showAllSweets() {
+        List<AbstractSweet> sweets = repository.findAll();
+
+        return sweets.isEmpty() ? Collections.emptyList() : sweets;
     }
 
     @Override

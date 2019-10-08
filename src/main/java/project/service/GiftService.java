@@ -5,17 +5,19 @@ import project.domain.sweet.AbstractSweet;
 import project.domain.user.User;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface GiftService {
-    Optional<Gift> showGiftByOwner(User owner);
-    List<AbstractSweet> sortSweetsBySugarContent(Long id);
-    List<AbstractSweet> sortSweetsByPrice(Long id);
-    List<AbstractSweet> sortSweetsByWeight(Long id);
-    List<AbstractSweet> showSweetsBySugarContentRange(Long id, Byte start, Byte end);
+    Gift addGift(Gift gift);
 
-    void removeSweet(Long id, AbstractSweet sweet);
-    void addSweet(Long id, AbstractSweet sweet);
+    Gift showGiftByOwner(User owner);
+    List<AbstractSweet> sortSweetsBySugarContent(User owner);
+    List<AbstractSweet> sortSweetsByPrice(User owner);
+    List<AbstractSweet> sortSweetsByWeight(User owner);
+    List<AbstractSweet> showSweetsBySugarContentRange(User owner, Byte start, Byte end);
 
-    Optional<Gift> deleteByOwner(User owner);
+    void removeSweet(User owner, AbstractSweet sweet);
+    void addSweet(User owner, AbstractSweet sweet);
+
+    Gift deleteByOwner(User owner);
 }

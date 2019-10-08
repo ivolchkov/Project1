@@ -41,6 +41,8 @@ public class UserServiceImplTest {
     @After
     public void resetMock() {
         reset(repository);
+        reset(validator);
+        reset(encoder);
     }
 
     @Test
@@ -103,6 +105,7 @@ public class UserServiceImplTest {
                 build();
         when(encoder.encode(any(String.class))).thenReturn(Optional.of("test"));
         when(repository.findByEmail("igorik@gmail.com")).thenReturn(Optional.ofNullable(expected));
+
         userService.login("igorik@gmail.com", "test");
     }
 

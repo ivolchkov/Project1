@@ -1,5 +1,6 @@
 package project.domain.gift;
 
+import org.apache.log4j.Logger;
 import project.domain.sweet.AbstractSweet;
 import project.domain.user.User;
 
@@ -8,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Gift {
+    private static final Logger LOGGER = Logger.getLogger("file");
+
     private static Long counter = 0L;
 
     private final Long id;
@@ -18,6 +21,7 @@ public class Gift {
 
     public Gift(User owner) {
         if (owner == null) {
+            LOGGER.warn("User has not been found");
             throw new IllegalArgumentException("User has not been found");
         }
 
@@ -31,6 +35,7 @@ public class Gift {
     public Gift(User owner, List<AbstractSweet> sweets) {
         this(owner);
         if (sweets == null) {
+            LOGGER.warn("There are no sweets");
             throw new IllegalArgumentException("There are no sweets");
         }
 
@@ -67,6 +72,7 @@ public class Gift {
 
     public void addSweet(AbstractSweet sweet) {
         if (sweet == null) {
+            LOGGER.warn("Can`t add empty sweet");
             throw new IllegalArgumentException("Can`t add empty sweet");
         }
 
@@ -77,12 +83,14 @@ public class Gift {
 
     public void removeSweet(AbstractSweet sweet) {
         if (sweet == null) {
+            LOGGER.warn("Can`t remove empty sweet");
             throw new IllegalArgumentException("Can`t remove empty sweet");
         }
 
-        this.sweets.remove(sweet);
-        this.weight -= sweet.getWeight();
-        this.price -= sweet.getPrice();
+        if (this.sweets.remove(sweet)) {
+            this.weight -= sweet.getWeight();
+            this.price -= sweet.getPrice();
+        }
     }
 
     @Override

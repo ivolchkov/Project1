@@ -9,7 +9,7 @@ public interface SweetService {
     AbstractSweet addSweet(AbstractSweet sweet);
 
     AbstractSweet showSweetById(Long id);
-//    List<AbstractSweet> showSweetsBySugarContentRange(Byte start, Byte end);
+    List<AbstractSweet> showAllSweets();
 //    List<AbstractSweet> showSweetsByPriceRange(Integer start, Integer end);
 //    List<AbstractSweet> showSweetsByWeightRange(Integer start, Integer end);
     List<AbstractSweet> getSweetsByOrder(Map<Long,Integer> order);

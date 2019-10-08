@@ -1,4 +1,4 @@
-package project.view;
+package project;
 
 import project.domain.gift.Gift;
 import project.domain.sweet.LollyPop;
@@ -12,7 +12,7 @@ public class ConsoleApplication {
         User user = new User.UserBuilder().withName("Ihor").
                 withSurname("Volchkov").
                 withEmail("igorik@ua.fm").
-                withPassword("test").
+                withPassword("Vfkmdbyf1997").
                 build();
 
         System.out.println(user);
