@@ -15,7 +15,7 @@ import java.util.*;
 public class Menu {
     private static final ResourceManager MANAGER = ResourceManager.INSTANCE;
     private static final Scanner IN = new Scanner(System.in);
-    public static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)Default(English)";
+    private static final String LANGUAGE = "Select an appropriate language:\n" + "1)Russian\n" + "2)Default(English)";
 
     private final UserService userService;
     private final GiftService giftService;
@@ -145,10 +145,11 @@ public class Menu {
                 }
                 case 3: {
                     isFinish = true;
+                    System.out.println(MANAGER.getString("registration.goodBye"));
                     break;
                 }
                 default: {
-                    throw new IllegalArgumentException("Invalid operation");
+                    System.out.println(MANAGER.getString("invalidChoice"));
                 }
             }
         }
@@ -181,9 +182,13 @@ public class Menu {
                 }
             }
 
-            List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
-            Gift gift = new Gift(user, sweets);
-            giftService.addGift(gift);
+            try {
+                List<AbstractSweet> sweets = sweetService.getSweetsByOrder(order);
+                Gift gift = new Gift(user, sweets);
+                giftService.addGift(gift);
+            } catch (IllegalArgumentException exception) {
+                System.out.println(MANAGER.getString("invalidChoice"));
+            }
         }
     }
 
@@ -233,16 +238,20 @@ public class Menu {
                     break;
                 }
                 default: {
-                    throw new IllegalArgumentException("Invalid operation");
+                    isFinish = true;
+                    System.out.println(MANAGER.getString("invalidChoice"));
                 }
             }
         }
     }
 
     private void showCurrentGift(User user) {
-        Gift gift = giftService.showGiftByOwner(user);
-
-        System.out.println(gift);
+        try {
+            Gift gift = giftService.showGiftByOwner(user);
+            System.out.println(gift);
+        } catch (Exception e) {
+            System.out.println(MANAGER.getString("invalidChoice"));
+        }
     }
 
     private void showSweetsBySugarContent(User user) {

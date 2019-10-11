@@ -8,7 +8,7 @@ import project.domain.user.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface GiftRepository extends Repository<Gift> {
+public interface GiftRepository extends CRUDRepository<Gift> {
     Optional<Gift> findByOwner(User owner);
     List<AbstractSweet> findSweetsBySugarContent(Long id);
     List<AbstractSweet> findSweetsByPrice(Long id);
